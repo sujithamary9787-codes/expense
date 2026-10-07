@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reports - ExpenseWise</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<nav class="navbar">
+    <a class="logo" href="{{ url_for('dashboard') }}">ExpenseWise</a>
+    <div class="nav-links">
+        <a href="{{ url_for('dashboard') }}">Home</a>
+        <a href="{{ url_for('expenses_page') }}">Expenses</a>
+        <a href="{{ url_for('income_page') }}">Income</a>
+        <a href="{{ url_for('budgets') }}">Budgets</a>
+        <a href="{{ url_for('categories') }}">Categories</a>
+        <a href="{{ url_for('transactions') }}">Transactions</a>
+        <a href="{{ url_for('reports') }}">Reports</a>
+        <a class="nav-user" href="{{ url_for('profile') }}">{{ current_user }}</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+</nav>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+<div class="flash-container">
+    {% for category, message in messages %}
+        <div class="flash flash-{{ category }}">{{ message }}</div>
+    {% endfor %}
+</div>
+{% endwith %}
+
+<main class="container">
+    <div class="page-header">
+        <div><h1>Reports</h1><p>Understand where your money goes.</p></div>
+    </div>
+
+    <div class="cards">
+        <div class="card"><div class="stat-label">Income</div><div class="stat-value green">₹{{ "%.2f"|format(income) }}</div></div>
+        <div class="card"><div class="stat-label">Expenses</div><div class="stat-value red">₹{{ "%.2f"|format(expenses) }}</div></div>
+        <div class="card"><div class="stat-label">Balance</div><div class="stat-value purple">₹{{ "%.2f"|format(balance) }}</div></div>
+    </div>
+
+    <div class="card">
+        <h2>Expenses by Category</h2>
+        <div class="chart-area">
+        {% for row in category_rows %}
+            {% set percentage = ((row.total / expenses) * 100) if expenses else 0 %}
+            <div class="bar-row">
+                <div class="bar-info">
+                    <span>{{ row.name }}</span>
+                    <span>₹{{ "%.2f"|format(row.total) }}</span>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar" style="width: {{ percentage }}%"></div>
+                </div>
+            </div>
+        {% else %}
+            <div class="empty">No expense data available.</div>
+        {% endfor %}
+        </div>
+    </div>
+</main>
+</body>
+</html>

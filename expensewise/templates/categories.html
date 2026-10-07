@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Categories - ExpenseWise</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<nav class="navbar">
+    <a class="logo" href="{{ url_for('dashboard') }}">ExpenseWise</a>
+    <div class="nav-links">
+        <a href="{{ url_for('dashboard') }}">Home</a>
+        <a href="{{ url_for('expenses_page') }}">Expenses</a>
+        <a href="{{ url_for('income_page') }}">Income</a>
+        <a href="{{ url_for('budgets') }}">Budgets</a>
+        <a href="{{ url_for('categories') }}">Categories</a>
+        <a href="{{ url_for('transactions') }}">Transactions</a>
+        <a href="{{ url_for('reports') }}">Reports</a>
+        <a class="nav-user" href="{{ url_for('profile') }}">{{ current_user }}</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+</nav>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+<div class="flash-container">
+    {% for category, message in messages %}
+        <div class="flash flash-{{ category }}">{{ message }}</div>
+    {% endfor %}
+</div>
+{% endwith %}
+
+<main class="container">
+    <div class="page-header">
+        <div><h1>Categories</h1><p>Organize income and expenses.</p></div>
+    </div>
+
+    <div class="grid-2">
+        <div class="card form-card">
+            <h2>Add Category</h2>
+            <form method="POST">
+                <div class="form-group">
+                    <label>Category Name</label>
+                    <input class="form-control" type="text" name="name" placeholder="e.g. Groceries" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Type</label>
+                    <select class="form-control" name="type" required>
+                        <option value="expense">Expense</option>
+                        <option value="income">Income</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-primary">Add Category</button>
+            </form>
+        </div>
+
+        <div class="card table-card">
+            <h2>Your Categories</h2>
+            {% if categories %}
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Name</th><th>Type</th><th></th></tr></thead>
+                    <tbody>
+                    {% for c in categories %}
+                    <tr>
+                        <td>{{ c.name }}</td>
+                        <td><span class="badge badge-{{ c.type }}">{{ c.type|capitalize }}</span></td>
+                        <td>
+                            <form method="POST" action="{{ url_for('delete_category', category_id=c.id) }}" data-confirm="Delete this category?">
+                                <button class="btn btn-danger btn-small">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}<div class="empty">No categories found.</div>{% endif %}
+        </div>
+    </div>
+</main>
+<script src="{{ url_for('static', filename='JS/script.js') }}"></script>
+</body>
+</html>

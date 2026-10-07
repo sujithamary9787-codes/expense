@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ExpenseWise | Smart Money Management</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="expensewise-home">
+
+<nav class="navbar home-navbar">
+
+    <a class="logo home-logo" href="{{ url_for('home') }}">
+        <span class="logo-symbol">₹</span>
+        <span>Expense<span>Wise</span></span>
+    </a>
+
+    <div class="nav-links home-nav-links">
+        <a href="{{ url_for('home') }}">Home</a>
+
+        <a href="{{ url_for('login') }}">Login</a>
+
+        <a class="btn btn-primary home-nav-btn"
+           href="{{ url_for('register') }}">
+            Get Started
+        </a>
+    </div>
+
+</nav>
+
+
+<section class="hero home-hero">
+
+    <!-- Background decorations -->
+    <div class="home-glow glow-one"></div>
+    <div class="home-glow glow-two"></div>
+
+
+    <!-- LEFT SIDE -->
+
+    <div class="hero-content home-content">
+
+        <div class="home-badge">
+            <span class="badge-dot"></span>
+            SMART PERSONAL FINANCE
+        </div>
+
+
+        <h1>
+            Manage your money.
+            <br>
+            <span>Spend smarter.</span>
+        </h1>
+
+
+        <p>
+            ExpenseWise helps you track income, control expenses,
+            manage budgets and understand your financial habits
+            — all in one simple and powerful dashboard.
+        </p>
+
+
+        <div class="home-buttons">
+
+            <a href="{{ url_for('register') }}"
+               class="btn btn-primary home-main-btn">
+
+                Create Free Account
+
+                <span>→</span>
+
+            </a>
+
+
+            <a href="{{ url_for('login') }}"
+               class="home-login-btn">
+
+                Already have an account?
+
+                <strong>Login</strong>
+
+            </a>
+
+        </div>
+
+
+        <!-- BENEFITS -->
+
+        <div class="home-benefits">
+
+            <div class="benefit">
+
+                <div class="benefit-icon">
+                    ✓
+                </div>
+
+                <div>
+                    <strong>Track Expenses</strong>
+                    <small>Know where your money goes</small>
+                </div>
+
+            </div>
+
+
+            <div class="benefit">
+
+                <div class="benefit-icon">
+                    ₹
+                </div>
+
+                <div>
+                    <strong>Set Budgets</strong>
+                    <small>Stay within your limits</small>
+                </div>
+
+            </div>
+
+
+            <div class="benefit">
+
+                <div class="benefit-icon">
+                    ↗
+                </div>
+
+                <div>
+                    <strong>Grow Savings</strong>
+                    <small>Build better money habits</small>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- RIGHT SIDE DASHBOARD -->
+
+    <div class="home-dashboard">
+
+
+        <!-- Income floating card -->
+
+        <div class="floating-card income-card">
+
+            <div class="floating-icon income-icon">
+                ↗
+            </div>
+
+            <div>
+
+                <small>Monthly Income</small>
+
+                <strong>₹28,500</strong>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Main dashboard -->
+
+        <div class="dashboard-window">
+
+
+            <!-- Balance -->
+
+            <div class="dashboard-header">
+
+                <div>
+
+                    <small>Total Balance</small>
+
+                    <h2>₹42,850</h2>
+
+                </div>
+
+
+                <div class="balance-icon">
+                    ₹
+                </div>
+
+            </div>
+
+
+
+            <!-- Chart -->
+
+            <div class="mini-chart">
+
+                <div class="chart-bars">
+
+                    <span style="height:35%"></span>
+
+                    <span style="height:48%"></span>
+
+                    <span style="height:42%"></span>
+
+                    <span style="height:63%"></span>
+
+                    <span style="height:55%"></span>
+
+                    <span style="height:76%"></span>
+
+                    <span style="height:68%"></span>
+
+                    <span style="height:90%"></span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Stats -->
+
+            <div class="dashboard-stats">
+
+
+                <div class="dashboard-stat">
+
+                    <div class="stat-icon expense-icon">
+                        ↓
+                    </div>
+
+                    <div>
+
+                        <small>Expenses</small>
+
+                        <strong>₹8,240</strong>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="dashboard-stat">
+
+                    <div class="stat-icon saving-icon">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <small>Savings</small>
+
+                        <strong>₹20,260</strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Budget -->
+
+            <div class="budget-preview">
+
+                <div class="budget-text">
+
+                    <span>Monthly Budget</span>
+
+                    <strong>78% used</strong>
+
+                </div>
+
+
+                <div class="budget-progress">
+
+                    <div></div>
+
+                </div>
+
+
+                <small>
+                    You're on track this month
+                </small>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Budget floating card -->
+
+        <div class="floating-card budget-card">
+
+            <div class="budget-circle">
+
+                <span>78%</span>
+
+            </div>
+
+
+            <div>
+
+                <small>Budget Status</small>
+
+                <strong>On Track ✓</strong>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<div class="footer home-footer">
+    © 2026 ExpenseWise
+</div>
+
+
+</body>
+</html>

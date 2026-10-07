@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Budgets - ExpenseWise</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<nav class="navbar">
+    <a class="logo" href="{{ url_for('dashboard') }}">ExpenseWise</a>
+    <div class="nav-links">
+        <a href="{{ url_for('dashboard') }}">Home</a>
+        <a href="{{ url_for('expenses_page') }}">Expenses</a>
+        <a href="{{ url_for('income_page') }}">Income</a>
+        <a href="{{ url_for('budgets') }}">Budgets</a>
+        <a href="{{ url_for('categories') }}">Categories</a>
+        <a href="{{ url_for('transactions') }}">Transactions</a>
+        <a href="{{ url_for('reports') }}">Reports</a>
+        <a class="nav-user" href="{{ url_for('profile') }}">{{ current_user }}</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+</nav>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+<div class="flash-container">
+    {% for category, message in messages %}
+        <div class="flash flash-{{ category }}">{{ message }}</div>
+    {% endfor %}
+</div>
+{% endwith %}
+
+<main class="container">
+    <div class="page-header">
+        <div><h1>Budgets</h1><p>Set category-wise spending limits.</p></div>
+    </div>
+
+    <div class="grid-2">
+        <div class="card form-card">
+            <h2>Create / Update Budget</h2>
+            <form method="POST">
+                <div class="form-group">
+                    <label>Expense Category</label>
+                    <select class="form-control" name="category_id" required>
+                        <option value="">Select category</option>
+                        {% for c in categories %}
+                        <option value="{{ c.id }}">{{ c.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Budget Amount</label>
+                    <input class="form-control" type="number" name="amount" min="0.01" step="0.01" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Month</label>
+                    <input class="form-control" type="month" name="month" required>
+                </div>
+
+                <button class="btn btn-primary">Save Budget</button>
+            </form>
+        </div>
+
+        <div class="card table-card">
+            <h2>Budget Overview</h2>
+            {% if budgets %}
+            {% for b in budgets %}
+                {% set percentage = ((b.spent / b.amount) * 100) if b.amount else 0 %}
+                {% if percentage > 100 %}{% set percentage = 100 %}{% endif %}
+                <div class="bar-row">
+                    <div class="bar-info">
+                        <span><strong>{{ b.category_name }}</strong> · {{ b.month }}</span>
+                        <span>₹{{ "%.0f"|format(b.spent) }} / ₹{{ "%.0f"|format(b.amount) }}</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar" style="width: {{ percentage }}%"></div>
+                    </div>
+                </div>
+            {% endfor %}
+            {% else %}<div class="empty">No budgets created yet.</div>{% endif %}
+        </div>
+    </div>
+</main>
+</body>
+</html>

@@ -6,7 +6,7 @@ from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = "expensewise-secret-key"
-DB_NAME = "expensewise.db"
+DB_NAME = "expensewise.dbgit init"
 
 
 def get_db():
